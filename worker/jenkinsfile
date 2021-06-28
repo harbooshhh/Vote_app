@@ -40,7 +40,7 @@ pipeline {
         
         always {
            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            junit 'build/reports/**/*.xml'
+            
             echo 'the job worker is finished.'
         }
     }
