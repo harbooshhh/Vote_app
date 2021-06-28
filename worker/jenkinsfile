@@ -20,12 +20,18 @@ pipeline {
          stage('Test') {
             steps {
                 echo 'Test worker is complete'
+		dir('worker') {
+                sh 'mvn clean test'
+		}
             }
         }
         
          stage('Package') {
             steps {
                 echo 'Package worker is done'
+		dir('worker') {
+                sh 'mvn package -DskipTests'
+	}
             }
         }
     }
