@@ -34,6 +34,7 @@ pipeline {
 		}
             }
         }
+}
         
     post {
         
@@ -42,6 +43,6 @@ pipeline {
             echo 'the job worker is finished.'
         }
     }
-}
+
 }
 
