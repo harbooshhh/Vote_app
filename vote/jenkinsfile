@@ -13,7 +13,7 @@ pipeline {
 		changeset "**/vote/**"
 		}
             steps {
-                echo 'Compiling worker app.'
+                echo 'Compiling vote app.'
 		dir('vote') {
 		sh 'pip  install -r requirements.txt'
 		}
@@ -28,7 +28,7 @@ pipeline {
 		changeset "**/vote/**"
 			}
             steps {
-                echo 'Test worker is complete'
+                echo 'Test vote is complete'
 		dir('vote') {
                 sh 'nosetests -v'
 		}
