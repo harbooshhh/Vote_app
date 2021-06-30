@@ -6,9 +6,10 @@ pipeline {
         }
 	}
 
-    stages {
-        stage('Build') {
-	when {
+    stages 
+        { 
+	stage('Build') {
+		when {
 		changeset "**/result/**"
 		}
             steps {
@@ -19,7 +20,7 @@ pipeline {
 	
 	}
             }
-        }
+        
         
         
          stage('Test') {
@@ -41,5 +42,6 @@ pipeline {
             echo 'the job worker is finished.'
         }
     }
+}
 }
 
