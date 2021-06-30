@@ -3,7 +3,6 @@ pipeline {
     agent {
         docker {
             image 'node:8.16-alpine'
-        #    args '-v $HOME/.m2:/root/.m2'
         }
 	}
 
@@ -34,20 +33,9 @@ pipeline {
             }
         }
         
-        # stage('Package') {
-        #    steps {
-        #        echo 'Package worker is done'
-#		dir('worker') {
-#               sh 'mvn package -DskipTests'
-#	}
-#            }
-#        }
-    }
-    
     post{
         
         always {
-    #       archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             
             echo 'the job worker is finished.'
         }
