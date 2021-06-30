@@ -1,0 +1,48 @@
+
+pipeline {
+    agent {
+        docker {
+            image 'python:2.7.18-slim'
+        }
+	}
+
+    stages 
+        { 
+	stage('Build') {
+		when {
+		changeset "**/vote/**"
+		}
+            steps {
+                echo 'Compiling worker app.'
+		dir('vote') {
+		sh 'pip  install -r requirements.txt'
+		}
+	
+	}
+            }
+        
+        
+        
+         stage('Test') {
+		when {
+		changeset "**/vote/**"
+			}
+            steps {
+                echo 'Test worker is complete'
+		dir('vote') {
+                sh 'nosetests -v'
+		}
+            }
+        }
+}
+        
+    post {
+        
+        always {
+            
+            echo 'the job worker is finished.'
+        }
+    }
+
+}
+
