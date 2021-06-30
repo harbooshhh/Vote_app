@@ -2,17 +2,20 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.8.1-adoptopenjdk-11'
-            args '-v $HOME/.m2:/root/.m2'
+            image 'node:8.16-alpine'
+        #    args '-v $HOME/.m2:/root/.m2'
         }
 	}
 
     stages {
         stage('Build') {
+	when {
+		changeset "**/result/**"
+		}
             steps {
                 echo 'Compiling worker app.'
-		dir('worker') {
-		sh 'mvn compile'
+		dir('result') {
+		sh 'npm install'
 	
 	}
             }
@@ -20,28 +23,31 @@ pipeline {
         
         
          stage('Test') {
+		when {
+		changeset "**/result/**"
+			}
             steps {
                 echo 'Test worker is complete'
 		dir('worker') {
-                sh 'mvn clean test'
+                sh 'npm test'
 		}
             }
         }
         
-         stage('Package') {
-            steps {
-                echo 'Package worker is done'
-		dir('worker') {
-                sh 'mvn package -DskipTests'
-	}
-            }
-        }
+        # stage('Package') {
+        #    steps {
+        #        echo 'Package worker is done'
+#		dir('worker') {
+#               sh 'mvn package -DskipTests'
+#	}
+#            }
+#        }
     }
     
     post{
         
         always {
-           archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+    #       archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             
             echo 'the job worker is finished.'
         }
