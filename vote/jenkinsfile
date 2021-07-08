@@ -1,15 +1,21 @@
 
 pipeline {
-    agent {
-        docker {
-            image 'python:2.7.18-slim'
-
-        }
+    agent none 
 	}
+
 
     stages 
         { 
+
+	agent {
+        docker {
+            image 'python:2.7.18-slim'
+        
+        }
+        }
+
 	stage('Build') {
+
 		when {
 		changeset "**/vote/**"
 		}
@@ -25,6 +31,13 @@ pipeline {
         
         
          stage('Test') {
+
+		agent {
+        	docker {
+            	image 'python:2.7.18-slim'
+        
+        		}
+        	}
 		when {
 		changeset "**/vote/**"
 			}
@@ -35,6 +48,30 @@ pipeline {
 		}
             }
         }
+
+
+	stage('Docker-package')
+	{
+	 agent any
+	when {
+		changeset '**/vote/**'
+		branch 'master'
+		} 
+	script {
+		
+		docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
+
+        	def customImage = docker.build("harbooshhh/vote:v${env.BUILD_ID}","./worker")
+
+        	/* Push the container to the custom Registry */
+        	customImage.push()
+
+        	customImage.push("${env.BRANCH}")
+
+		}	
+
+
+	}
 }
         
     post {
