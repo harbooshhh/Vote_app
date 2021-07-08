@@ -1,15 +1,21 @@
 
 pipeline {
-    agent {
-        docker {
-            image 'python:2.7.18-slim'
-
-        }
+    agent none 
 	}
+
 
     stages 
         { 
+
+	agent {
+        docker {
+            image 'python:2.7.18-slim'
+        
+        }
+        }
+
 	stage('Build') {
+
 		when {
 		changeset "**/vote/**"
 		}
@@ -25,6 +31,13 @@ pipeline {
         
         
          stage('Test') {
+
+		agent {
+        	docker {
+            	image 'python:2.7.18-slim'
+        
+        		}
+        	}
 		when {
 		changeset "**/vote/**"
 			}
