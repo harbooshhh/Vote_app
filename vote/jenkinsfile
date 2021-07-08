@@ -1,7 +1,7 @@
 
 pipeline {
     agent none 
-	}
+	
 
 
     stages 
@@ -71,6 +71,7 @@ pipeline {
 		}	
 
 
+		}
 	}
 }
         
@@ -82,5 +83,5 @@ pipeline {
         }
     }
 
-}
+
 
