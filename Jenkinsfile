@@ -62,7 +62,7 @@ pipeline {
 	echo 'worker package is performed...'
 	dir('worker'){
 	sh 'mvn package -DskipTests'
-	archiveArtifacts artifact:'**/target/*.jar'
+	archiveArtifacts artifacts: '**/target/*.jar' , fingerprint: true
 
 	
 	
