@@ -212,6 +212,7 @@ pipeline {
         }
 
       }
+      }
 
       stage('Sonarqube') {
       agent any
@@ -246,7 +247,7 @@ pipeline {
         }
     }
 
-    }
+    
 
     stage('Deploy to Dev') {
       agent any
