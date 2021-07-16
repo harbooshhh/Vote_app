@@ -191,6 +191,27 @@ pipeline {
       }
     }
 
+
+
+
+stage('Integration Test') {
+      agent any
+
+      
+      when {
+        changeset '**/vote/**'
+	branch 'master'
+      }
+      steps {
+        echo 'Integration Test is complete'
+        dir(path: 'vote') {
+          sh 'integration_test.sh'
+        }
+
+      }
+    }
+
+
     stage('Vote Docker-package') {
       agent any
       when {
